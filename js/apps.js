@@ -18,7 +18,7 @@ overlay.addEventListener("click", () => {
   overlay.classList.remove("active");
     });
 
-let scroll = document.querySelector('.scroll');
+/*let scroll = document.querySelector('.scroll');
 window.addEventListener('scroll', function () {
   
   let topToBottomRange = window.scrollY;
@@ -45,4 +45,41 @@ window.addEventListener('scroll', function () {
 
   progressScroll.style.width = result + '%';
 
+});*/
+
+
+let scrollBtn = document.querySelector('.scroll');
+let progressScroll = document.querySelector('.progressScroll');
+
+window.addEventListener('scroll', function () {
+  let scrollTop = window.scrollY;
+  let totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+  let scrollPercent = Math.round((scrollTop / totalHeight) * 100);
+
+
+
+  if (scrollTop > 200) {
+    scrollBtn.classList.add('scroll_active');
+  } else {
+    scrollBtn.classList.remove('scroll_active');
+  }
+
+  progressScroll.style.width = scrollPercent + '%';
+
+
+  scrollBtn.style.background = `
+    conic-gradient(
+      red 0% ${scrollPercent / 5}%,
+      green ${scrollPercent / 5}% ${scrollPercent * 2 / 5}%,
+      blue ${scrollPercent * 2 / 5}% ${scrollPercent * 3 / 5}%,
+      yellow ${scrollPercent * 3 / 5}% ${scrollPercent * 4 / 5}%,
+      black ${scrollPercent * 4 / 5}% ${scrollPercent}%
+    )
+  `;
 });
+
+
+scrollBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
